@@ -19,7 +19,6 @@ export default async function pokemonPage({ params }){
           />
           <h1>{pokemonObject.base_experience}</h1>
           <h1>{pokemonObject.height + " inches"}</h1>
-
       </> 
   )
 }

@@ -24,14 +24,25 @@ export async function getPokemon(name: string) {
   }
 }
 
-
-export async function getAbility(name: string) {
+// Get Pokémon ability
+export async function getAbility(abilityName: string) {
   try {
-      const response = await axios.get(basePokemonApi + "ability/" + name);
-      return response.data;
+    const response = await axios.get(`${basePokemonApi}ability/${abilityName}`);
+    return response.data;
   } catch (error) {
-      console.error(`Error fetching Pokémon ${name}:`, error);
-      throw error;
+    console.error(`Error fetching ability data for "${abilityName}":`, error);
+    throw error;
+  }
+}
+
+// Get Pokémon type
+export async function getType(typeName: string) {
+  try {
+    const response = await axios.get(`${basePokemonApi}type/${typeName}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching type data for "${typeName}":`, error);
+    throw error;
   }
 }
 

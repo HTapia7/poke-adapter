@@ -23,3 +23,15 @@ export async function getPokemon(name: string) {
       throw error;
   }
 }
+
+
+export async function getAbility(name: string) {
+  try {
+      const response = await axios.get(basePokemonApi + "ability/" + name);
+      return response.data;
+  } catch (error) {
+      console.error(`Error fetching Pokémon ${name}:`, error);
+      throw error;
+  }
+}
+

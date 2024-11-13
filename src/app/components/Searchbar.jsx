@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import axios from 'axios';
+import PokeCards from './PokeCards';
 
 function Searchbar() {
   const [inputValue, setInputValue] = useState('');
@@ -19,6 +20,7 @@ function Searchbar() {
           response.data,
         ]);
         setError(null);
+         console.log(response.data)
       })
       .catch(() => {
         setError("Pokémon not found. Please try another name.");
@@ -30,7 +32,7 @@ function Searchbar() {
   };
 
   return (
-    <form className="max-w-md mx-auto p-5 w-full" onSubmit={handleSearch}>
+    <form className="w-full max-w-md p-5 mx-auto" onSubmit={handleSearch}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -38,7 +40,7 @@ function Searchbar() {
         Search
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
           <svg
             className="w-4 h-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
@@ -57,7 +59,7 @@ function Searchbar() {
         </div>
         <input
           type="search"
-          className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Pokémon..."
           value={inputValue}
           onChange={handleChange}
@@ -71,16 +73,16 @@ function Searchbar() {
         </button>
       </div>
 
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {error && <p className="mt-2 text-red-500">{error}</p>}
 
-      <div>
+      <div className='py-5'>
         {pokemonList.map((pokemon, index) => (
-          <div key={index} className="mt-4 border p-4 rounded bg-gray-100">
-            <p><strong>Name:</strong> {pokemon.name}</p>
-            <p><strong>ID:</strong> {pokemon.id}</p>
-            <p><strong>Base Experience:</strong> {pokemon.base_experience}</p>
-            <p><strong>Height:</strong> {pokemon.height}</p>
-            <p><strong>Weight:</strong> {pokemon.weight}</p>
+          <div key={index}>
+            <PokeCards
+              name={pokemon.name}
+              imageUrl={pokemon.sprites.front_shiny}
+              pokedexNumber={pokemon.id}
+            />
           </div>
         ))}
       </div>

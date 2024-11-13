@@ -7,10 +7,11 @@ const Logo = () => {
     <div>
       <Image
         src={PokeballLogo}
-        width={55}
-        height={55}
+        width={60}
+        height={60}
         alt="Picture of Pikachu"
         priority={true}
+        quality={100}
       />
   </div>
   )

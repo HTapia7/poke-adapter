@@ -11,7 +11,7 @@ export async function getAllPokemon() {
       console.error("Error fetching all Pokémon:", error);
       throw error;
   }
-}
+};
 
 // get pokemon by name
 export async function getPokemon(name: string) {
@@ -22,7 +22,7 @@ export async function getPokemon(name: string) {
       console.error(`Error fetching Pokémon ${name}:`, error);
       throw error;
   }
-}
+};
 
 // Get Pokémon ability
 export async function getAbility(abilityName: string) {
@@ -33,7 +33,7 @@ export async function getAbility(abilityName: string) {
     console.error(`Error fetching ability data for "${abilityName}":`, error);
     throw error;
   }
-}
+};
 
 // Get Pokémon type
 export async function getType(typeName: string) {
@@ -44,5 +44,5 @@ export async function getType(typeName: string) {
     console.error(`Error fetching type data for "${typeName}":`, error);
     throw error;
   }
-}
+};
 

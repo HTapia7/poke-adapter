@@ -1,12 +1,39 @@
-import React from 'react'
-import { allGeneration } from '../libs/pokemonAPI'
+"use client";
+import React, { useState, useEffect } from "react";
+import { getGeneration } from "../libs/pokemonAPI"; 
 
-const generationList = () => {
+const GenerationList = () => {
+  const [generations, setGenerations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGenerations = async () => {
+      try {
+        const allGenerations = await getGeneration(); 
+        setGenerations(allGenerations);
+      } catch (error) {
+        console.error("Error fetching generations:", error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchGenerations(); 
+  }, []);
+
+  if (loading) {
+    return <p>Loading generations...</p>;
+  }
+
   return (
-    <div>
-      <h1>Generation</h1>
+    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+      {generations.map((generation, index) => (
+        <div key={index} className="p-4 border rounded-md shadow-sm">
+          <h3 className="text-lg font-bold">{generation.name}</h3>
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default generationList
+export default GenerationList;

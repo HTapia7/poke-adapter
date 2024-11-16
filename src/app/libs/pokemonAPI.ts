@@ -47,12 +47,23 @@ export async function getType(typeName: string) {
 };
 
 // Get all generation 
-export async function allGeneration(number: number) {
+export async function getOneGeneration(number: number) {
   try {
     const response = await axios.get(`${basePokemonApi}generation/${number}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching generation data for generation ${number}:`, error);
     throw new Error(`Failed to fetch generation data for generation ${number}`);
+  }
+}
+
+// get generations
+export async function getGeneration() {
+  try {
+    const response = await axios.get(`${basePokemonApi}generation`);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching generation data:", error);
+    throw new Error("Failed to fetch generation data");
   }
 }

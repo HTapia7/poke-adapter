@@ -1,34 +1,73 @@
-"use client"
-import { useState } from 'react';
-import axios from 'axios';
-import PokeCards from './PokeCards';
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import PokeCards from "./PokeCards";
 
 function Searchbar() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); 
+  const [hasSearched, setHasSearched] = useState(false); 
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    if (!inputValue) return;
-
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${inputValue.toLowerCase()}`)
-      .then((response) => {
-        setPokemonList((prevList) => [
-          ...prevList,
-          response.data,
-        ]);
-        setError(null);
-         console.log(response.data)
-      })
-      .catch(() => {
-        setError("Pokémon not found. Please try another name.");
-      });
-  };
+  useEffect(() => {
+    if (inputValue) {
+      
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon?limit=1000`)
+        .then((response) => {
+          const suggestions = response.data.results.filter((pokemon) =>
+            pokemon.name.toLowerCase().includes(inputValue.toLowerCase())
+          );
+          setFilteredSuggestions(suggestions);
+        })
+        .catch(() => {
+          setError("Error fetching Pokémon suggestions");
+        });
+    } else {
+      setFilteredSuggestions([]); 
+    }
+  }, [inputValue]);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
+    setError(null); 
+  };
+
+ 
+  const handleSuggestionClick = (pokemonName) => {
+    setInputValue(""); 
+    setFilteredSuggestions([]); 
+    fetchPokemonData(pokemonName);
+    setHasSearched(true);
+  };
+
+  const fetchPokemonData = (pokemonName) => {
+    setIsLoading(true); 
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
+      .then((response) => {
+        setPokemonList([response.data]);
+        setError(null);
+      })
+      .catch(() => {
+        setPokemonList([]); 
+        setError("Pokémon not found. Please try another name.");
+      })
+      .finally(() => {
+        setIsLoading(false); 
+      });
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    if (inputValue) {
+      fetchPokemonData(inputValue);
+      setInputValue(""); 
+      setHasSearched(true); 
+      setFilteredSuggestions([]); 
+    }
   };
 
   return (
@@ -75,16 +114,36 @@ function Searchbar() {
 
       {error && <p className="mt-2 text-red-500">{error}</p>}
 
-      <div className='py-5'>
-        {pokemonList.map((pokemon, index) => (
-          <div key={index}>
+      {filteredSuggestions.length > 0 && (
+        <div className="absolute z-10 mt-2 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg max-h-60">
+          {filteredSuggestions.map((suggestion) => (
+            <div
+              key={suggestion.name}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+              onClick={() => handleSuggestionClick(suggestion.name)}
+            >
+              {suggestion.name}
+            </div>
+          ))}
+        </div>
+      )}
+
+     
+      <div className="py-5">
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && hasSearched && pokemonList.length === 0 && !error && (
+          <p>No Pokémon found.</p>
+        )}
+        {!isLoading &&
+          pokemonList.length > 0 &&
+          pokemonList.map((pokemon) => (
             <PokeCards
+              key={pokemon.id}
               name={pokemon.name}
               imageUrl={pokemon.sprites.front_shiny}
               pokedexNumber={pokemon.id}
             />
-          </div>
-        ))}
+          ))}
       </div>
     </form>
   );

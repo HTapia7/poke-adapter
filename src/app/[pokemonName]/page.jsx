@@ -18,7 +18,7 @@ export default async function PokemonPage({ params }) {
             className="border border-gray-300 rounded-lg"
           />
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold capitalize">{pokemonName}</h1>
+            <h1 className="text-4xl font-bold capitalize">{pokemonObject.name}</h1>
             <p className="text-gray-700">ID: {pokemonObject.id}</p>
             <p className="text-gray-700">Base Experience: {pokemonObject.base_experience}</p>
             <p className="text-gray-700">Height: {pokemonObject.height} inches</p>

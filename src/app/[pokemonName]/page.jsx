@@ -26,18 +26,39 @@ export default async function PokemonPage({ params }) {
           </div>
         </div>
 
-        <div className="mt-6">
-          <h2 className="mb-4 text-2xl font-semibold">Types</h2>
-          <ul className="flex space-x-4">
-            {pokemonObject.types.map((typeInfo) => (
-              <li
-                key={typeInfo.slot}
-                className="px-4 py-1 text-white capitalize bg-blue-500 rounded-full"
-              >
-                {typeInfo.type.name}
-              </li>
-            ))}
-          </ul>
+        <div className="flex justify-between mt-6 space-x-8">
+          {/* Types Section */}
+          <div className="w-1/2">
+            <h2 className="mb-4 text-2xl font-semibold">Types</h2>
+            <ul className="flex space-x-4">
+              {pokemonObject.types.map((typeInfo) => (
+                <li
+                  key={typeInfo.slot}
+                  className="px-4 py-1 text-white capitalize bg-blue-500 rounded-full"
+                >
+                  {typeInfo.type.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Abilities Section */}
+          <div className="w-1/2">
+            <h2 className="mb-4 text-2xl font-semibold">Abilities</h2>
+            <ul className="flex flex-wrap gap-2">
+              {pokemonObject.abilities.map((abilityInfo, index) => (
+                <li
+                  key={index}
+                  className={`px-4 py-1 text-white capitalize rounded-full ${
+                    abilityInfo.is_hidden ? "bg-purple-600" : "bg-green-500"
+                  }`}
+                >
+                  {abilityInfo.ability.name}
+                  {abilityInfo.is_hidden && " (Hidden)"}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="mt-6">

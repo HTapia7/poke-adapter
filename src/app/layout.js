@@ -20,13 +20,28 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full bg-gray-100 dark:bg-gray-800">
+      <head>
+        <title>My App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-gray-800`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar/>
-        {children}
+        <header className="bg-white shadow-md dark:bg-gray-900">
+          <div className="container p-4 mx-auto">
+            <Navbar />
+          </div>
+        </header>
+
+        <main className="container flex-grow p-4 mx-auto">{children}</main>
+
+        <footer className="py-4 text-center bg-gray-200 dark:bg-gray-700">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            &copy; {new Date().getFullYear()} My App. All rights reserved.
+          </p>
+        </footer>
       </body>
     </html>
   );
-};
+}

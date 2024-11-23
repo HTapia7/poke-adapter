@@ -45,6 +45,17 @@ export async function getType(type: string) {
   }
 }
 
+// get specific type
+export async function getOneType(type: string) {
+  try {
+    const response = await axios.get(`${basePokemonApi}type/${type}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 
 // Get all generation 
 export async function getOneGeneration(number: number) {

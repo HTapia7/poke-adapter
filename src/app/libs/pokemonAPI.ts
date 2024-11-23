@@ -36,15 +36,15 @@ export async function getAbility(abilityName: string) {
 };
 
 // Get Pokémon type
-export async function getType(typeName: string) {
+export async function getType(type: string) {
   try {
-    const response = await axios.get(`${basePokemonApi}type/${typeName}`);
+    const response = await axios.get(`${basePokemonApi}type/`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching type data for "${typeName}":`, error);
     throw error;
   }
-};
+}
+
 
 // Get all generation 
 export async function getOneGeneration(number: number) {

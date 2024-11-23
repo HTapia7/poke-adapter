@@ -1,11 +1,12 @@
 import React from 'react'
+import TypeList from "../components/TypeList"
 
 const page = () => {
   return (
     <div>
-        <h1>Legendary</h1>
+      <TypeList/>
     </div>
   )
 }
 
-export default page
+export default page;

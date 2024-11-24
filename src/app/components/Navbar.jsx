@@ -12,7 +12,6 @@ const Navbar = () => {
       className="bg-white shadow-md dark:bg-gray-900"
     >
       <div className="container flex items-center justify-between p-4 mx-auto">
-        {/* Logo and Site Name */}
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <Logo />
           <span className="text-2xl font-bold text-gray-800 dark:text-white">
@@ -20,7 +19,6 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Hamburger Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="inline-flex items-center justify-center p-2 text-gray-500 rounded-md md:hidden hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -44,7 +42,6 @@ const Navbar = () => {
           </svg>
         </button>
 
-        {/* Navigation Links */}
         <div
           id="navbar-menu"
           className={`${

@@ -55,8 +55,6 @@ export async function getOneType(type: string) {
   }
 }
 
-
-
 // Get all generation 
 export async function getOneGeneration(number: number) {
   try {
